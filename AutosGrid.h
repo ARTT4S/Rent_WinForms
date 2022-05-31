@@ -2,6 +2,7 @@
 #define AUTOSGRID_H
 #include "Autos.h"
 #include "EditAuto.h"
+#include "Func.h"
 
 namespace AutosNamespace {
 
@@ -12,6 +13,7 @@ namespace AutosNamespace {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace AutosClass;
+	using namespace functions;
 	
 	public ref class AutosForm : public System::Windows::Forms::Form
 	{
@@ -165,6 +167,8 @@ namespace AutosNamespace {
 			this->saveFileDialog1->CheckFileExists = true;
 			this->saveFileDialog1->Filter = L"Text files(*.bin)|*.bin";
 			this->saveFileDialog1->Title = L"Выберите файл для сохранения автомобилей";
+			this->saveFileDialog1->CreatePrompt = true;
+			this->saveFileDialog1->OverwritePrompt = true;
 			this->saveFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &AutosForm::saveFileDialog1_FileOk);
 			// 
 			// AutosForm
@@ -195,8 +199,6 @@ namespace AutosNamespace {
 		private: System::Void saveFileDialog1_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 		}
 };
-	System::Void Read(String^ Text, String^ string, int* i);
-	System::Void Read(String^ Text, int* integer, int* i);
 	
 }
 

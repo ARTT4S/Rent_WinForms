@@ -28,14 +28,59 @@ namespace OrdersNamespace {
 		}
 	}
 	System::Void OrdersForm::OrdersGrid_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		int index = OrdersGrid->CurrentCell->RowIndex;
-		EditOrders = gcnew EditOrder(m_Orders, m_quontOrders, &index);
+		EditOrders = gcnew EditOrder(m_Orders, m_quontOrders, m_Cars, m_quontCars, m_Clients, m_quontClients, OrdersGrid->CurrentCell->RowIndex);
 		EditOrders->Show();
 	}
 	System::Void OrdersForm::AddClient_Click(System::Object^ sender, System::EventArgs^ e) {
 		OrdersGrid->Rows->Add();
-		EditOrders = gcnew EditOrder(m_Orders, m_quontOrders);
+		EditOrders = gcnew EditOrder(m_Orders, m_quontOrders, m_Cars, m_quontCars, m_Clients, m_quontClients, *m_quontOrders);
 		++(*m_quontOrders);
 		EditOrders->Show();
+	}
+
+	System::Void OrdersForm::FileIn_Click(System::Object^ sender, System::EventArgs^ e) {
+		int i{}, count{};
+		int tempCarnumber{};
+		String^ tempPhone;
+		DateTime^ tempDate;
+		DateTime^ tempBackDate;
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) {
+			return;
+		}
+		String^ filename = openFileDialog1->FileName;
+		String^ FileText = System::IO::File::ReadAllText(filename);
+		for (int j = 0; j < FileText->Length; ++j) {
+			if (FileText[j] == '|') {
+				++count;
+			}
+		}
+		*m_quontOrders = count / 4;
+		for (int j = 0; j < *m_quontOrders; ++j) {
+			Read(FileText, &tempCarnumber, &i);
+			m_Orders[j]->SetCarnumber(tempCarnumber);
+			m_Orders[j]->SetPhone(Read(FileText, tempPhone, &i));
+			m_Orders[j]->SetDate(Read(FileText, tempDate, &i));
+			m_Orders[j]->SetBackDate(Read(FileText, tempBackDate, &i));
+		}
+		MessageBox::Show("Список клиентов загружен");
+	}
+	System::Void OrdersForm::FileOut_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) {
+			return;
+		}
+		String^ filename = saveFileDialog1->FileName;
+		String^ FileText;
+		for (int i = 0; i < *m_quontOrders; ++i) {
+			FileText += Convert::ToString(m_Orders[i]->GetCarnumber());
+			FileText += "|";
+			FileText += m_Orders[i]->GetPhone();
+			FileText += "|";
+			FileText += Convert::ToString(m_Orders[i]->GetDate());
+			FileText += "|";
+			FileText += Convert::ToString(m_Orders[i]->GetBackDate());
+			FileText += "|";
+		}
+		System::IO::File::WriteAllText(filename, FileText);
+		MessageBox::Show("Список автомобилей выгружен");
 	}
 }

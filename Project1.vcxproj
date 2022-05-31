@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Autos.cpp" />
     <ClCompile Include="Clients.cpp" />
+    <ClCompile Include="Func.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="AutosGrid.cpp" />
     <ClCompile Include="ClientGrid.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Autos.h" />
     <ClInclude Include="Clients.h" />
+    <ClInclude Include="Func.h" />
     <ClInclude Include="MainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>

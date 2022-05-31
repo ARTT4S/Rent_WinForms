@@ -32,40 +32,40 @@ namespace AutosNamespace {
 
 	System::Void AutosForm::AddAuto_Click(System::Object^ sender, System::EventArgs^ e) {
 		AutosGrid->Rows->Add();
-		EditCars = gcnew EditAuto(m_Cars, m_quontCars);
+		EditCars = gcnew EditAuto(m_Cars, *m_quontCars);
 		++(*m_quontCars);
 		EditCars->Show();
 
 	}
 
 	System::Void AutosForm::AutosGrid_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		int index = AutosGrid->CurrentCell->RowIndex;
-		EditCars = gcnew EditAuto(m_Cars, m_quontCars, &index);
+		EditCars = gcnew EditAuto(m_Cars, m_quontCars, AutosGrid->CurrentCell->RowIndex);
 		EditCars->Show();
 	}
 
 	System::Void AutosForm::FileIn_Click(System::Object^ sender, System::EventArgs^ e) {
-		int i{};
-		int tempNumber, tempPrice;
-		String^ tempBrand;
-		String^ tempType;
-		saveFileDialog1->CreatePrompt = true;
-		saveFileDialog1->OverwritePrompt = true;
+		int i{}, count{};
+		int tempNumber{}, tempPrice{};
+		String^ tempBrand = nullptr;
+		String^ tempType = nullptr;
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) {
 			return;
 		}
 		String^ filename = openFileDialog1->FileName;
 		String^ FileText = System::IO::File::ReadAllText(filename);
 		for (int j = 0; j < FileText->Length; ++j) {
+			if (FileText[j] == '|') {
+				++count;
+			}
+		}
+		*m_quontCars = count / 4;
+		for (int j = 0; j < *m_quontCars; ++j) {
 			Read(FileText, &tempNumber, &i);
 			m_Cars[j]->setNumber(tempNumber);
-			Read(FileText, tempBrand, &i);
-			m_Cars[j]->setBrand(tempBrand);
+			m_Cars[j]->setBrand(Read(FileText, tempBrand, &i));
 			Read(FileText, &tempPrice, &i);
-			m_Cars[j]->setNumber(tempPrice);
-			Read(FileText, tempType, &i);
-			m_Cars[j]->setBrand(tempType);
-			i = 0;
+			m_Cars[j]->setPrice(tempPrice);
+			m_Cars[j]->setType(Read(FileText, tempType, &i));
 		}
 		MessageBox::Show("Список автомобилей загружен");
 	}
@@ -89,27 +89,4 @@ namespace AutosNamespace {
 		System::IO::File::WriteAllText(filename, FileText);
 		MessageBox::Show("Список автомобилей выгружен");
 	}
-
-	System::Void Read(String^ Text, String^ string, int* i) {
-		wchar_t read{};
-		for (i; read != '|'; ++*i) {
-			read = Text[Convert::ToInt32(*i)];
-			if (read != '|') {
-				string += read;
-			}
-		}
-	}
-
-	System::Void Read(String^ Text, int* integer, int* i) {
-		wchar_t read{};
-		String^ temp;
-		for (i; read != '|'; ++*i) {
-			read = Text[Convert::ToInt32(*i)];
-			if (read != '|') {
-				temp += read;
-			}
-		}
-		*integer = Convert::ToInt32(temp);
-	}
-
 }

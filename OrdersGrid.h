@@ -1,7 +1,10 @@
 #ifndef ORDERSGRID_H
 #define ORDERSGRID_H
+#include "Autos.h"
+#include "Clients.h"
 #include "Orders.h"
 #include "EditOrder.h"
+#include "Func.h"
 
 namespace OrdersNamespace {
 
@@ -11,19 +14,30 @@ namespace OrdersNamespace {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace AutosClass;
+	using namespace ClientsClass;
 	using namespace OrdersClass;
+	using namespace functions;
 
 	public ref class OrdersForm : public System::Windows::Forms::Form
 	{
 	private:
 		   array<Order^>^ m_Orders = gcnew array<Order^>(ORDER_SIZE);
 		   EditOrder^ EditOrders;
+		   array<Client^>^ m_Clients = gcnew array<Client^>(CLIENT_SIZE);
+		   array<Autos^>^ m_Cars = gcnew array<Autos^>(AUTO_SIZE);
+		   int* m_quontCars;
+		   int* m_quontClients;
 		   int* m_quontOrders;
 	public:
-		OrdersForm(array<Order^>^ Orders, int* quontOrders)
+		OrdersForm(array<Order^>^ Orders, int* quontOrders, array<Autos^>^ Cars, int* quontCars, array<Client^>^ Clients, int* quontClients)
 		{
 			m_Orders->Copy(Orders, m_Orders, ORDER_SIZE);
 			m_quontOrders = quontOrders;
+			m_Cars->Copy(Cars, m_Cars, AUTO_SIZE);
+			m_quontCars = quontCars;
+			m_Clients->Copy(Clients, m_Clients, CLIENT_SIZE);
+			m_quontClients = quontClients;
 			InitializeComponent();
 		}
 
@@ -45,6 +59,8 @@ namespace OrdersNamespace {
 	private: System::Windows::Forms::Button^ FileOut;
 	private: System::Windows::Forms::Button^ FileIn;
 	private: System::Windows::Forms::Button^ AddClient;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
 	private:
 		System::ComponentModel::Container ^components;
 
@@ -60,6 +76,8 @@ namespace OrdersNamespace {
 			this->FileOut = (gcnew System::Windows::Forms::Button());
 			this->FileIn = (gcnew System::Windows::Forms::Button());
 			this->AddClient = (gcnew System::Windows::Forms::Button());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->OrdersGrid))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -124,6 +142,7 @@ namespace OrdersNamespace {
 			this->FileOut->TabIndex = 9;
 			this->FileOut->Text = L"Выгрузить в файл";
 			this->FileOut->UseVisualStyleBackColor = true;
+			this->FileOut->Click += gcnew System::EventHandler(this, &OrdersForm::FileOut_Click);
 			// 
 			// FileIn
 			// 
@@ -134,6 +153,7 @@ namespace OrdersNamespace {
 			this->FileIn->TabIndex = 8;
 			this->FileIn->Text = L"Загрузить из файла";
 			this->FileIn->UseVisualStyleBackColor = true;
+			this->FileIn->Click += gcnew System::EventHandler(this, &OrdersForm::FileIn_Click);
 			// 
 			// AddClient
 			// 
@@ -146,6 +166,10 @@ namespace OrdersNamespace {
 			this->AddClient->Text = L"Добавить";
 			this->AddClient->UseVisualStyleBackColor = true;
 			this->AddClient->Click += gcnew System::EventHandler(this, &OrdersForm::AddClient_Click);
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// OrdersForm
 			// 
@@ -169,6 +193,8 @@ namespace OrdersNamespace {
 	private: System::Void OrdersForm_Activated(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void OrdersGrid_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e);
 	private: System::Void AddClient_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void FileIn_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void FileOut_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }
 

@@ -2,6 +2,7 @@
 #define CLIENTGRID_H
 #include "Clients.h"
 #include "EditClient.h"
+#include "Func.h"
 
 namespace ClientNamespace {
 
@@ -12,13 +13,16 @@ namespace ClientNamespace {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace ClientsClass;
+	using namespace functions;
 
 	public ref class ClientsForm : public System::Windows::Forms::Form
 	{
 	private:
 		array<Client^>^ m_Clients = gcnew array<Client^>(CLIENT_SIZE);
 		EditClient^ EditClients;
-		int* m_quontClients;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
+		   int* m_quontClients;
 	public:
 		ClientsForm(array<Client^>^ Clients, int* quontClients)
 		{
@@ -64,6 +68,8 @@ namespace ClientNamespace {
 			this->FileOut = (gcnew System::Windows::Forms::Button());
 			this->FileIn = (gcnew System::Windows::Forms::Button());
 			this->AddClient = (gcnew System::Windows::Forms::Button());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ClientGrid))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -141,6 +147,7 @@ namespace ClientNamespace {
 			this->FileOut->TabIndex = 6;
 			this->FileOut->Text = L"Выгрузить в файл";
 			this->FileOut->UseVisualStyleBackColor = true;
+			this->FileOut->Click += gcnew System::EventHandler(this, &ClientsForm::FileOut_Click);
 			// 
 			// FileIn
 			// 
@@ -151,6 +158,7 @@ namespace ClientNamespace {
 			this->FileIn->TabIndex = 5;
 			this->FileIn->Text = L"Загрузить из файла";
 			this->FileIn->UseVisualStyleBackColor = true;
+			this->FileIn->Click += gcnew System::EventHandler(this, &ClientsForm::FileIn_Click);
 			// 
 			// AddClient
 			// 
@@ -163,6 +171,10 @@ namespace ClientNamespace {
 			this->AddClient->Text = L"Добавить";
 			this->AddClient->UseVisualStyleBackColor = true;
 			this->AddClient->Click += gcnew System::EventHandler(this, &ClientsForm::AddClient_Click);
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// ClientsForm
 			// 
@@ -187,6 +199,8 @@ namespace ClientNamespace {
 		private: System::Void ClientsForm_Load(System::Object^ sender, System::EventArgs^ e);
 		private: System::Void ClientGrid_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e);
 		private: System::Void AddClient_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void FileIn_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void FileOut_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }
 

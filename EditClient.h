@@ -17,20 +17,20 @@ namespace ClientNamespace {
 	private:
 		array<Client^>^ m_Clients = gcnew array<Client^>(CLIENT_SIZE);
 		int* m_quontClients;
-		int* m_numClient;
+		int m_numClient;
 	public:
-		EditClient(array<Client^>^ Clients, int* quontClients, int* numClient)
+		EditClient(array<Client^>^ Clients, int* quontClients, int numClient)
 		{
 			m_Clients->Copy(Clients, m_Clients, CLIENT_SIZE);
 			m_quontClients = quontClients;
 			m_numClient = numClient;
 			InitializeComponent();
 		}
-		EditClient(array<Client^>^ Clients, int* numClient)
+		EditClient(array<Client^>^ Clients, int numClient)
 		{
 			m_Clients->Copy(Clients, m_Clients, CLIENT_SIZE);
 			m_numClient = numClient;
-			m_quontClients = numClient;
+			m_quontClients = &numClient;
 			InitializeComponent();
 		}
 
@@ -176,6 +176,7 @@ namespace ClientNamespace {
 			this->PhoneTextBox->Name = L"PhoneTextBox";
 			this->PhoneTextBox->Size = System::Drawing::Size(136, 22);
 			this->PhoneTextBox->TabIndex = 21;
+			this->PhoneTextBox->MaxLength = 11;
 			this->PhoneTextBox->TextChanged += gcnew System::EventHandler(this, &EditClient::PhoneTextBox_TextChanged);
 			// 
 			// PhoneLabel

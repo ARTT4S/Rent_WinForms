@@ -148,7 +148,7 @@ namespace Rent {
 			ClientForm->Show();
 		}
 		private: System::Void OrderButton_Click(System::Object^ sender, System::EventArgs^ e) {
-			OrdersForm^ OrderForm = gcnew OrdersForm(m_Orders, m_quontOrders);
+			OrdersForm^ OrderForm = gcnew OrdersForm(m_Orders, m_quontOrders, m_Cars, m_quontCars, m_Clients, m_quontClients);
 			OrderForm->Show();
 		}
 };

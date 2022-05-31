@@ -18,9 +18,9 @@ namespace AutosNamespace {
 	private:
 		array<Autos^>^ m_Cars = gcnew array<Autos^>(AUTO_SIZE);
 		int* m_quontCars;
-		int* m_numCar;
+		int m_numCar;
 	public:
-		EditAuto(array<Autos^>^ Cars, int* quontCars, int* numCar)
+		EditAuto(array<Autos^>^ Cars, int* quontCars, int numCar)
 		{
 			m_Cars->Copy(Cars, m_Cars, AUTO_SIZE);
 			m_quontCars = quontCars;
@@ -28,11 +28,11 @@ namespace AutosNamespace {
 
 			InitializeComponent();
 		}
-		EditAuto(array<Autos^>^ Cars, int *numCar)
+		EditAuto(array<Autos^>^ Cars, int numCar)
 		{
 			m_Cars->Copy(Cars, m_Cars, AUTO_SIZE);
 			m_numCar = numCar;
-			m_quontCars = numCar;
+			m_quontCars = &numCar;
 			InitializeComponent();
 		}
 	protected:
@@ -89,6 +89,7 @@ namespace AutosNamespace {
 			this->NumberTextBox->Size = System::Drawing::Size(136, 22);
 			this->NumberTextBox->TabIndex = 1;
 			this->NumberTextBox->TextChanged += gcnew System::EventHandler(this, &EditAuto::NumberTextBox_TextChanged);
+			this->NumberTextBox->MaxLength = 3;
 			// 
 			// BrandLabel
 			// 

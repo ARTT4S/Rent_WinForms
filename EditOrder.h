@@ -1,6 +1,8 @@
 #ifndef EDITORDER_H
 #define EDITORDER_H
 #include "Orders.h"
+#include "Autos.h"
+#include "Clients.h"
 
 namespace OrdersNamespace {
 
@@ -11,6 +13,8 @@ namespace OrdersNamespace {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace OrdersClass;
+	using namespace AutosClass;
+	using namespace ClientsClass;
 
 	/// <summary>
 	/// Сводка для EditOrder
@@ -20,7 +24,11 @@ namespace OrdersNamespace {
 	private:
 		array<Order^>^ m_Orders = gcnew array<Order^>(ORDER_SIZE);
 		int* m_quontOrders;
-		int* m_numOrder;
+		array<Client^>^ m_Clients = gcnew array<Client^>(CLIENT_SIZE);
+		array<Autos^>^ m_Cars = gcnew array<Autos^>(AUTO_SIZE);
+		int* m_quontCars;
+		int* m_quontClients;
+		int m_numOrder;
 	private: System::Windows::Forms::TextBox^ PhoneTextBox;
 	private: System::Windows::Forms::Label^ PhoneLabel;
 	private: System::Windows::Forms::TextBox^ CarnumberTextBox;
@@ -29,21 +37,30 @@ namespace OrdersNamespace {
 	private: System::Windows::Forms::Label^ DateLabel;
 	private: System::Windows::Forms::Label^ BackDateLabel;
 	private: System::Windows::Forms::DateTimePicker^ BackDateChoise;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ DelOrder;
+	private: System::Windows::Forms::Button^ Stat;
+	private: System::Windows::Forms::Button^ FinishEditting;
 	public:
-		EditOrder(array<Order^>^ Orders, int* quontOrders, int* numOrder)
+		EditOrder(array<Order^>^ Orders, int* quontOrders, array<Autos^>^ Cars, int* quontCars, array<Client^>^ Clients, int* quontClients, int numOrder)
 		{
 			m_Orders->Copy(Orders, m_Orders, ORDER_SIZE);
 			m_quontOrders = quontOrders;
+			m_Cars->Copy(Cars, m_Cars, AUTO_SIZE);
+			m_quontCars = quontCars;
+			m_Clients->Copy(Clients, m_Clients, CLIENT_SIZE);
+			m_quontClients = quontClients;
 			m_numOrder = numOrder;
 			InitializeComponent();
 		}
-		EditOrder(array<Order^>^ Orders, int* numOrder)
+		EditOrder(array<Order^>^ Orders, array<Autos^>^ Cars, int* quontCars, array<Client^>^ Clients, int* quontClients, int numOrder)
 		{
 			m_Orders->Copy(Orders, m_Orders, ORDER_SIZE);
 			m_numOrder = numOrder;
-			m_quontOrders = m_numOrder;
+			m_Cars->Copy(Cars, m_Cars, AUTO_SIZE);
+			m_quontCars = quontCars;
+			m_Clients->Copy(Clients, m_Clients, CLIENT_SIZE);
+			m_quontClients = quontClients;
+			m_quontOrders = &numOrder;
 			InitializeComponent();
 		}
 
@@ -80,15 +97,16 @@ namespace OrdersNamespace {
 			this->DateLabel = (gcnew System::Windows::Forms::Label());
 			this->BackDateLabel = (gcnew System::Windows::Forms::Label());
 			this->BackDateChoise = (gcnew System::Windows::Forms::DateTimePicker());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->DelOrder = (gcnew System::Windows::Forms::Button());
+			this->FinishEditting = (gcnew System::Windows::Forms::Button());
+			this->Stat = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// PhoneTextBox
 			// 
-			this->PhoneTextBox->Location = System::Drawing::Point(173, 58);
+			this->PhoneTextBox->Location = System::Drawing::Point(192, 58);
 			this->PhoneTextBox->Name = L"PhoneTextBox";
-			this->PhoneTextBox->Size = System::Drawing::Size(136, 22);
+			this->PhoneTextBox->Size = System::Drawing::Size(169, 22);
 			this->PhoneTextBox->TabIndex = 7;
 			this->PhoneTextBox->TextChanged += gcnew System::EventHandler(this, &EditOrder::PhoneTextBox_TextChanged);
 			// 
@@ -103,9 +121,9 @@ namespace OrdersNamespace {
 			// 
 			// CarnumberTextBox
 			// 
-			this->CarnumberTextBox->Location = System::Drawing::Point(173, 18);
+			this->CarnumberTextBox->Location = System::Drawing::Point(192, 18);
 			this->CarnumberTextBox->Name = L"CarnumberTextBox";
-			this->CarnumberTextBox->Size = System::Drawing::Size(136, 22);
+			this->CarnumberTextBox->Size = System::Drawing::Size(169, 22);
 			this->CarnumberTextBox->TabIndex = 5;
 			this->CarnumberTextBox->TextChanged += gcnew System::EventHandler(this, &EditOrder::CarnumberTextBox_TextChanged);
 			// 
@@ -120,7 +138,7 @@ namespace OrdersNamespace {
 			// 
 			// DateChoise
 			// 
-			this->DateChoise->Location = System::Drawing::Point(143, 96);
+			this->DateChoise->Location = System::Drawing::Point(192, 96);
 			this->DateChoise->Name = L"DateChoise";
 			this->DateChoise->Size = System::Drawing::Size(169, 22);
 			this->DateChoise->TabIndex = 8;
@@ -146,41 +164,52 @@ namespace OrdersNamespace {
 			// 
 			// BackDateChoise
 			// 
-			this->BackDateChoise->Location = System::Drawing::Point(143, 136);
+			this->BackDateChoise->Location = System::Drawing::Point(192, 136);
 			this->BackDateChoise->Name = L"BackDateChoise";
 			this->BackDateChoise->Size = System::Drawing::Size(169, 22);
 			this->BackDateChoise->TabIndex = 10;
 			this->BackDateChoise->ValueChanged += gcnew System::EventHandler(this, &EditOrder::BackDateChoise_ValueChanged);
 			// 
-			// button2
+			// DelOrder
 			// 
-			this->button2->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button2->Location = System::Drawing::Point(173, 213);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(136, 45);
-			this->button2->TabIndex = 13;
-			this->button2->Text = L"Удалить запись";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &EditOrder::button2_Click);
+			this->DelOrder->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->DelOrder->Location = System::Drawing::Point(270, 226);
+			this->DelOrder->Name = L"DelOrder";
+			this->DelOrder->Size = System::Drawing::Size(91, 45);
+			this->DelOrder->TabIndex = 13;
+			this->DelOrder->Text = L"Удалить запись";
+			this->DelOrder->UseVisualStyleBackColor = true;
+			this->DelOrder->Click += gcnew System::EventHandler(this, &EditOrder::DelOrder_Click);
 			// 
-			// button1
+			// FinishEditting
 			// 
-			this->button1->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button1->Location = System::Drawing::Point(22, 213);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(136, 45);
-			this->button1->TabIndex = 12;
-			this->button1->Text = L"Закончить редактирование";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &EditOrder::button1_Click);
+			this->FinishEditting->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->FinishEditting->Location = System::Drawing::Point(12, 226);
+			this->FinishEditting->Name = L"FinishEditting";
+			this->FinishEditting->Size = System::Drawing::Size(125, 45);
+			this->FinishEditting->TabIndex = 12;
+			this->FinishEditting->Text = L"Закончить редактирование";
+			this->FinishEditting->UseVisualStyleBackColor = true;
+			this->FinishEditting->Click += gcnew System::EventHandler(this, &EditOrder::FinishEditting_Click);
+			// 
+			// Stat
+			// 
+			this->Stat->Location = System::Drawing::Point(158, 226);
+			this->Stat->Name = L"Stat";
+			this->Stat->Size = System::Drawing::Size(93, 45);
+			this->Stat->TabIndex = 14;
+			this->Stat->Text = L"Статистика";
+			this->Stat->UseVisualStyleBackColor = true;
+			this->Stat->Click += gcnew System::EventHandler(this, &EditOrder::Stat_Click);
 			// 
 			// EditOrder
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(331, 283);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->ClientSize = System::Drawing::Size(373, 283);
+			this->Controls->Add(this->Stat);
+			this->Controls->Add(this->DelOrder);
+			this->Controls->Add(this->FinishEditting);
 			this->Controls->Add(this->BackDateLabel);
 			this->Controls->Add(this->BackDateChoise);
 			this->Controls->Add(this->DateLabel);
@@ -202,8 +231,9 @@ namespace OrdersNamespace {
 	private: System::Void BackDateChoise_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void CarnumberTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void PhoneTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void FinishEditting_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void DelOrder_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void Stat_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }
 
