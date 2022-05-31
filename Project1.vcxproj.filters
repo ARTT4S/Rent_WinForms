@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Классы">
+      <UniqueIdentifier>{2ba9ae0d-e65e-4f72-8dda-eba4bbf3fdf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Классы\Autos">
+      <UniqueIdentifier>{1610b97f-6197-43cc-ac78-1f9ffcb1b7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Классы\Clients">
+      <UniqueIdentifier>{f6821c35-7495-44fc-aeb8-de2a4a3c1b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Классы\Orders">
+      <UniqueIdentifier>{849acf66-5ef4-4885-a574-23a05a62f44e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="AutosGrid.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientGrid.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OrdersGrid.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Autos.cpp">
+      <Filter>Классы\Autos</Filter>
+    </ClCompile>
+    <ClCompile Include="Clients.cpp">
+      <Filter>Классы\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="Orders.cpp">
+      <Filter>Классы\Orders</Filter>
+    </ClCompile>
+    <ClCompile Include="EditAuto.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="EditClient.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="EditOrder.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="AutosGrid.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientGrid.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="OrdersGrid.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Autos.h">
+      <Filter>Классы\Autos</Filter>
+    </ClInclude>
+    <ClInclude Include="Clients.h">
+      <Filter>Классы\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="Orders.h">
+      <Filter>Классы\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="EditAuto.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="EditClient.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="EditOrder.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
